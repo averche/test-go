@@ -17,12 +17,12 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	// defer req.Body.Close()
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
 		log.Println("bad status: ", resp.Status)
