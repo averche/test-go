@@ -21,7 +21,6 @@ func main() {
 			log.Println(ctx.Err().Error())
 			http.Error(w, ctx.Err().Error(), http.StatusInternalServerError)
 		}
-
 	})
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
