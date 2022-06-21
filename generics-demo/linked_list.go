@@ -9,11 +9,13 @@ type Node[T any] struct {
 
 type LinkedList[T any] struct {
 	head *Node[T]
+	tail *Node[T]
 }
 
 func NewLinkedList[T any]() *LinkedList[T] {
 	return &LinkedList[T]{
 		head: nil,
+		tail: nil,
 	}
 }
 
@@ -25,8 +27,10 @@ func (l *LinkedList[T]) Add(value T) {
 
 	if l.head == nil {
 		l.head = node
+		l.tail = node
 	} else {
-		l.head.next = node
+		l.tail.next = node
+		l.tail = node
 	}
 }
 
