@@ -8,8 +8,11 @@ import (
 
 func main() {
 	if len(os.Args) != 3 {
-		log.Fatalf("Usage: %s <cert> <key>\n", os.Args[0])
+		log.Fatalf("Usage: %s <cert-file> <key-file>\n", os.Args[0])
 	}
+
+	log.Println("Certificate file:", os.Args[1])
+	log.Println("Certificate key:", os.Args[2])
 
 	_, err := tls.LoadX509KeyPair(
 		os.Args[1],
