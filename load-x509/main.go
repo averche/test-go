@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/sha256"
 	"crypto/tls"
 	"log"
 	"os"
@@ -14,7 +15,7 @@ func main() {
 	log.Println("Certificate file:", os.Args[1])
 	log.Println("Certificate key:", os.Args[2])
 
-	_, err := tls.LoadX509KeyPair(
+	cert, err := tls.LoadX509KeyPair(
 		os.Args[1],
 		os.Args[2],
 	)
@@ -22,5 +23,5 @@ func main() {
 		log.Fatal(err)
 	}
 
-	log.Println("Success!")
+	log.Printf("%d %x\n", len(cert.Certificate), sha256.Sum256(cert.Certificate[0]))
 }
