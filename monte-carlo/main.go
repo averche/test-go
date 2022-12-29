@@ -9,15 +9,18 @@ import (
 
 func main() {
 	for _, capacity := range []uint64{
+		1,
+		2,
+		3,
 		30,
 		100,
 		1000,
 		10000,
 	} {
-		iterations, estimate := monteCarlo(100000000, capacity, 0.001)
+		iterations, estimate := monteCarlo(100000000, capacity, 0.0001)
 
 		fmt.Printf(
-			"capacity: %-9d, operations: %-9d, estimate: %f\n",
+			"capacity: %-6d| iterations: %-9d| estimate: %f\n",
 			capacity,
 			iterations,
 			estimate,
@@ -25,16 +28,20 @@ func main() {
 	}
 }
 
+// monteCarlo runs at most iterationsMax experiments and retuns the average estimate.
+// The function returns early if estimates convege within epsilon.
 func monteCarlo(iterationsMax uint64, capacity uint64, epsilon float64) (uint64, float64) {
 	var (
-		total             uint64
+		total uint64
+
+		// circular array of 10 latest estimates (computed every 1000 iterations)
 		latestEstimates   [10]float64
 		latestEstimateIdx int
 	)
 
-	withinEpsilon := func(estimates []float64, epsilon float64) bool {
-		for i := 1; i < len(estimates); i++ {
-			if math.Abs(estimates[i]-estimates[i-1]) > epsilon {
+	withinEpsilon := func(latestEstimates []float64, latestEstimateIdx int, epsilon float64) bool {
+		for i := 0; i < len(latestEstimates); i++ {
+			if math.Abs(latestEstimates[i]-latestEstimates[latestEstimateIdx]) > epsilon {
 				return false
 			}
 		}
@@ -52,8 +59,8 @@ func monteCarlo(iterationsMax uint64, capacity uint64, epsilon float64) (uint64,
 			latestEstimates[latestEstimateIdx] = latest
 			latestEstimateIdx = (latestEstimateIdx + 1) % 10
 
-			// if the last 3 estimates are within epsilon, return early
-			if withinEpsilon(latestEstimates[:], epsilon) {
+			if withinEpsilon(latestEstimates[:], latestEstimateIdx, epsilon) {
+				fmt.Println(latestEstimates)
 				return i, latest
 			}
 		}
@@ -62,6 +69,7 @@ func monteCarlo(iterationsMax uint64, capacity uint64, epsilon float64) (uint64,
 	return iterationsMax, float64(total) / float64(iterationsMax)
 }
 
+// calculateOne runs a single calculation for the given number of oranges in each box (capacity)
 func calculateOne(seed int64, capacity uint64) uint64 {
 	// intialice both to the given capacity
 	oranges1, oranges2 := capacity, capacity
