@@ -60,7 +60,6 @@ func monteCarlo(iterationsMax uint64, capacity uint64, epsilon float64) (uint64,
 			latestEstimateIdx = (latestEstimateIdx + 1) % 10
 
 			if withinEpsilon(latestEstimates[:], latestEstimateIdx, epsilon) {
-				fmt.Println(latestEstimates)
 				return i, latest
 			}
 		}
