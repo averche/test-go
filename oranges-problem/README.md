@@ -1,4 +1,4 @@
-# Monte Carlo Simulation of Oranges
+# Oranges Problem
 
 ## Problem Statement
 
