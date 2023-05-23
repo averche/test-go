@@ -5,7 +5,7 @@ import (
 )
 
 var (
-	testData = []Vector3D{
+	testData = []Point{
 		{1000.124, 2000.234, 3000.345},
 		{2000.124, 3000.234, 7000.345},
 		{3000.124, 4000.234, 8000.345},
@@ -20,31 +20,43 @@ var (
 )
 
 func BenchmarkAdd(b *testing.B) {
-	var vector Vector3D
+	var point Point
 
 	for i := 0; i < b.N; i++ {
 		for _, v := range testData {
-			vector.Add(&v)
+			point.Add(&v)
 		}
+	}
+
+	if point.x < 0 || point.y < 0 || point.z < 0 {
+		b.Fatalf("unexpected result: %v", point)
 	}
 }
 
 func BenchmarkAddByValue(b *testing.B) {
-	var vector Vector3D
+	var point Point
 
 	for i := 0; i < b.N; i++ {
 		for _, v := range testData {
-			vector.AddByValue(v)
+			point.AddByValue(v)
 		}
+	}
+
+	if point.x < 0 || point.y < 0 || point.z < 0 {
+		b.Fatalf("unexpected result: %v", point)
 	}
 }
 
 func BenchmarkAddReturnCopy(b *testing.B) {
-	var vector Vector3D
+	var point Point
 
 	for i := 0; i < b.N; i++ {
 		for _, v := range testData {
-			vector = AddReturnCopy(vector, v)
+			point = AddReturnCopy(point, v)
 		}
+	}
+
+	if point.x < 0 || point.y < 0 || point.z < 0 {
+		b.Fatalf("unexpected result: %v", point)
 	}
 }
