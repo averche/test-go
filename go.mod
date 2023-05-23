@@ -2,4 +2,9 @@ module asd
 
 go 1.18
 
-require golang.org/x/exp v0.0.0-20220613132600-b0d781184e0d
+require (
+	github.com/hashicorp/consul-template v0.32.0
+	golang.org/x/exp v0.0.0-20230321023759-10a507213a29
+)
+
+require github.com/mitchellh/mapstructure v1.5.0 // indirect
