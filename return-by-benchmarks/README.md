@@ -5,10 +5,10 @@ $ go test -bench=.
 
 goos: darwin
 goarch: arm64
-pkg: asd/vector-test
-BenchmarkAdd-10                 34659668                34.52 ns/op
-BenchmarkAddByValue-10          34189576                34.50 ns/op
-BenchmarkAddReturnCopy-10       293998209                4.071 ns/op
+pkg: asd/return-by-benchmarks
+BenchmarkAdd-10                 28339845                35.37 ns/op
+BenchmarkAddByValue-10          34687761                34.94 ns/op
+BenchmarkAddReturnCopy-10       34478547                35.80 ns/op
 PASS
-ok      asd/vector-test 5.621s
+ok      asd/return-by-benchmarks        3.671s
 ```
