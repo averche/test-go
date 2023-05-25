@@ -4,8 +4,6 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"os"
-	"syscall"
 	"time"
 
 	"github.com/hashicorp/consul-template/child"
@@ -26,7 +24,7 @@ func run() (int, error) {
 	defer cancel()
 
 	proc, err := child.New(&child.NewInput{
-		Command: "./my-script-short.sh",
+		Command: "./my-script.sh",
 	})
 	if err != nil {
 		return -1, err
