@@ -10,36 +10,42 @@ import (
 	"github.com/hashicorp/consul-template/child"
 )
 
+const WeStoppedTheProcess = -0xC0FFEE
+
 func main() {
-	if err := run(); err != nil {
+	code, err := run()
+
+	if err != nil {
 		log.Fatal(err)
 	}
+
+	log.Println("exit code:", code)
 }
 
 // 0s : start the script
 // 2s : stop the script
 // 2s : the library attempts to kill the script
-func run() error {
+func run() (int, error) {
 	process, err := child.New(&child.NewInput{
 		Command:     "./my-script.sh",
-		Stdin:       os.Stdin,
 		Stdout:      os.Stdout,
-		Stderr:      os.Stderr,
-		Env:         os.Environ(),
 		KillSignal:  syscall.SIGTERM,
 		KillTimeout: 5 * time.Second,
 	})
 	if err != nil {
-		return err
+		return -2, err
 	}
 
 	if err := process.Start(); err != nil {
-		return fmt.Errorf("could not start process: %s", err)
+		return -3, fmt.Errorf("could not start the process: %s", err)
 	}
 
-	time.Sleep(2 * time.Second)
+	select {
+	case <-time.After(2 * time.Second):
+		process.Stop()
+		return WeStoppedTheProcess, nil
 
-	process.Stop()
-
-	return nil
+	case exitCode := <-process.ExitCh():
+		return exitCode, nil
+	}
 }
