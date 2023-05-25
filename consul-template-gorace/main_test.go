@@ -12,7 +12,7 @@ func TestRunOnce(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if c != WeStoppedTheProcess {
+	if c != SuccessfullyStoppedTheProcess {
 		t.Fatalf("unexpected return code: %d", c)
 	}
 }
@@ -26,7 +26,7 @@ func TestRunParallel(t *testing.T) {
 			if err != nil {
 				return err
 			}
-			if c != WeStoppedTheProcess {
+			if c != SuccessfullyStoppedTheProcess {
 				return fmt.Errorf("unexpected return code: %d", c)
 			}
 			return nil

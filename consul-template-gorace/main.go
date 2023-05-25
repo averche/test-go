@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/consul-template/child"
 )
 
-const WeStoppedTheProcess = -0xC0FFEE
+const SuccessfullyStoppedTheProcess = -0xC0FFEE
 
 func main() {
 	code, err := run()
@@ -22,9 +22,9 @@ func main() {
 	log.Println("exit code:", code)
 }
 
-// 0s : start the script
-// 2s : stop the script
-// 2s : the library attempts to kill the script
+// 0s : start the child process
+// 2s : stop the child process
+// 7s : the library attempts to kill the child process
 func run() (int, error) {
 	process, err := child.New(&child.NewInput{
 		Command:     "./my-script.sh",
@@ -43,7 +43,7 @@ func run() (int, error) {
 	select {
 	case <-time.After(2 * time.Second):
 		process.Stop()
-		return WeStoppedTheProcess, nil
+		return SuccessfullyStoppedTheProcess, nil
 
 	case exitCode := <-process.ExitCh():
 		return exitCode, nil
