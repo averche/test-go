@@ -2,6 +2,7 @@
 
 ```sh
 $ go test -run TestRunOnce                                                                                                                  27s  13:54:16
+
 2023/05/25 13:54:19 [INFO] (child) spawning: ./my-script.sh
 sleeping for 20s
 sleeping for 19s
