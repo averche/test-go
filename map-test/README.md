@@ -1,6 +1,6 @@
 ## Test Results
 
-```
+```sh
 goos: darwin
 goarch: arm64
 pkg: asd/map-test
