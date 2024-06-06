@@ -1,3 +1,5 @@
+// https://github.com/hashicorp/outbound-http-proxy?tab=readme-ov-file#using-this-proxy-in-your-code
+
 package httpproxytest
 
 import (
