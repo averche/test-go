@@ -1,6 +1,7 @@
 package main
 
 import (
+	httpproxytest "asd/http-proxy-test"
 	"testing"
 
 	"golang.org/x/sync/errgroup"
@@ -19,4 +20,6 @@ func TestRun(t *testing.T) {
 	if err := g.Wait(); err != nil {
 		t.Fatal(err)
 	}
+
+	e.Fatal(httpproxytest.TestHelper())
 }
