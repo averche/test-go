@@ -3,6 +3,8 @@ package main
 import (
 	"strings"
 	"testing"
+
+	"golang.org/x/exp/slices"
 )
 
 const (
@@ -16,7 +18,7 @@ func findWithContains(input, s string) bool {
 	return strings.Contains(input, s)
 }
 
-func findWithSplit(input, s string) bool {
+func findWithSplit1(input, s string) bool {
 	parts := strings.Split(input, ",")
 
 	for _, part := range parts {
@@ -28,6 +30,12 @@ func findWithSplit(input, s string) bool {
 	return false
 }
 
+func findWithSplit2(input, s string) bool {
+	parts := strings.Split(input, ",")
+
+	return slices.Contains(parts, s)
+}
+
 func BenchmarkWithContains(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		findWithContains(intput1, target)
@@ -36,10 +44,18 @@ func BenchmarkWithContains(b *testing.B) {
 	}
 }
 
-func BenchmarkWithSplit(b *testing.B) {
+func BenchmarkWithSplit1(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		findWithSplit(intput1, target)
-		findWithSplit(intput2, target)
-		findWithSplit(intput3, target)
+		findWithSplit1(intput1, target)
+		findWithSplit1(intput2, target)
+		findWithSplit1(intput3, target)
+	}
+}
+
+func BenchmarkWithSplit2(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		findWithSplit2(intput1, target)
+		findWithSplit2(intput2, target)
+		findWithSplit2(intput3, target)
 	}
 }
