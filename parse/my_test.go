@@ -1,6 +1,8 @@
 package parse
 
 import (
+	"asd/parse/option1"
+	"asd/parse/option2"
 	"testing"
 )
 
@@ -81,11 +83,11 @@ var namespaceData2 = []byte(`{
 
 func BenchmarkParseOption1(b *testing.B) {
 	for b.Loop() {
-		_, err := ParseOption1(kvv2Data1)
+		_, err := option1.Parse(kvv2Data1)
 		if err != nil {
 			b.Fatalf("ParseOption1 failed: %v", err)
 		}
-		_, err = ParseOption1(namespaceData1)
+		_, err = option1.Parse(namespaceData1)
 		if err != nil {
 			b.Fatalf("ParseOption1 failed: %v", err)
 		}
@@ -94,11 +96,11 @@ func BenchmarkParseOption1(b *testing.B) {
 
 func BenchmarkParseOption2(b *testing.B) {
 	for b.Loop() {
-		_, err := ParseOption2(kvv2Data2)
+		_, err := option2.Parse(kvv2Data2)
 		if err != nil {
 			b.Fatalf("ParseOption2 failed: %v", err)
 		}
-		_, err = ParseOption2(namespaceData2)
+		_, err = option2.Parse(namespaceData2)
 		if err != nil {
 			b.Fatalf("ParseOption2 failed: %v", err)
 		}
