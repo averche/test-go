@@ -1,6 +1,6 @@
 module asd
 
-go 1.18
+go 1.24.3
 
 require (
 	github.com/docker/docker v24.0.2+incompatible
