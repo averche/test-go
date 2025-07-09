@@ -17,12 +17,6 @@ type ObservationEnvelope2 struct {
 	Type          string    `json:"type"`
 }
 
-type PluginSpecificData struct {
-	NodeID     string      `json:"node_id"`
-	Namespace  string      `json:"namespace"`
-	PluginInfo PluginInfo1 `json:"plugin_info"`
-}
-
 type GenericObservation struct {
 	ObservationEnvelope2
 	Internal json.RawMessage `json:"data"`
@@ -30,8 +24,7 @@ type GenericObservation struct {
 
 type KVv2Observation2 struct {
 	ObservationEnvelope2
-	PluginData PluginSpecificData
-	Data       KVv2Data2
+	Data KVv2Data2
 }
 
 func (o KVv2Observation2) Envelope() ObservationEnvelope2 {
